@@ -1,30 +1,22 @@
-import { Text, SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useContext } from "react";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { ThemeProvider } from "styled-components/native";
+import { Text } from "react-native";
 
-// You can import supported modules from npm
-import { Card } from "react-native-paper";
+import { theme } from "./src/infrastructure/theme";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
-// or any files within the Snack
-import AssetExample from "./components/AssetExample";
+import { Navigation } from "./src/infrastructure/navigation";
 
 export default function App() {
   return (
-    <View>
-      <Text>Hello yuristgpt</Text>
-    </View>
+    <>
+      <ThemeProvider theme={theme}>
+        <AuthenticationContextProvider>
+          <Navigation />
+        </AuthenticationContextProvider>
+      </ThemeProvider>
+      <ExpoStatusBar style="auto" />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#ecf0f1",
-    padding: 8,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
