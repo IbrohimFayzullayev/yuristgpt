@@ -1,62 +1,54 @@
 import React from "react";
-import { View, ImageBackground, TouchableOpacity, Text } from "react-native";
-import styled from "styled-components/native";
-import { useNavigation } from "@react-navigation/native";
+// import LottieView from "lottie-react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
 
-const AccountScreen = () => {
-  const navigation = useNavigation();
+import { Spacer } from "../../../components/spacer/spacer.component";
+import {
+  AccountBackground,
+  AccountContainer,
+  AccountCover,
+  AuthButton,
+  AnimationWrapper,
+} from "../components/account.styles";
 
-  const handleLogin = () => {
-    // navigation.navigate('Login');
-  };
-
-  const handleRegister = () => {
-    // navigation.navigate('Register');
-  };
-
-  return (
-    <Container>
-      <BackgroundImage source={require("path/to/your/background/image.jpg")}>
-        <ButtonContainer>
-          <Button onPress={handleLogin}>
-            <ButtonText>Login</ButtonText>
-          </Button>
-          <Button onPress={handleRegister}>
-            <ButtonText>Register</ButtonText>
-          </Button>
-        </ButtonContainer>
-      </BackgroundImage>
-    </Container>
-  );
+type AccountScreenProps = {
+  navigation: StackNavigationProp<any>;
+  route: RouteProp<any>;
 };
 
-const Container = styled.View`
-  flex: 1;
-`;
-
-const BackgroundImage = styled.ImageBackground`
-  flex: 1;
-  resize-mode: cover;
-  justify-content: center;
-`;
-
-const ButtonContainer = styled.View`
-  align-items: center;
-`;
-
-const Button = styled.TouchableOpacity`
-  background-color: blue;
-  border-radius: 10px;
-  padding: 10px;
-  margin-vertical: 10px;
-  width: 200px;
-  align-items: center;
-`;
-
-const ButtonText = styled.Text`
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-`;
+const AccountScreen: React.FC<AccountScreenProps> = ({ navigation }) => {
+  return (
+    <AccountBackground>
+      <AccountCover />
+      <AnimationWrapper>
+        {/* <LottieView
+          style={{ width: "100%", height: "100%" }}
+          autoPlay
+          loop
+          source={require("../../../../assets/watermelon.json")}
+        /> */}
+      </AnimationWrapper>
+      <AccountContainer>
+        <AuthButton
+          icon="lock-open-outline"
+          mode="outlined"
+          onPress={() => navigation.navigate("Login")}
+        >
+          Login
+        </AuthButton>
+        <Spacer size="large">
+          <AuthButton
+            icon="email"
+            mode="outlined"
+            onPress={() => navigation.navigate("Register")}
+          >
+            Register
+          </AuthButton>
+        </Spacer>
+      </AccountContainer>
+    </AccountBackground>
+  );
+};
 
 export default AccountScreen;

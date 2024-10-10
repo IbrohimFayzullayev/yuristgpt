@@ -23,6 +23,7 @@ type AuthenticationContextType = {
   onLogin: (data: OnLoginProps) => void;
   onRegister: (data: OnRegisterProps) => void;
   onLogout: () => void;
+  error: string | null;
 };
 
 export const AuthenticationContext = createContext<AuthenticationContextType>(
@@ -32,6 +33,7 @@ export const AuthenticationContext = createContext<AuthenticationContextType>(
 export const AuthenticationContextProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<IUser | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -48,6 +50,8 @@ export const AuthenticationContextProvider = ({ children }: Props) => {
         setUser(user);
         AsyncStorage.setItem("user", JSON.stringify(user));
         console.log("User logged in successfully");
+      } else {
+        setError("Invalid username or password");
       }
     });
     setIsLoading(false);
@@ -74,6 +78,7 @@ export const AuthenticationContextProvider = ({ children }: Props) => {
         isAuthenticated: !!user,
         user,
         isLoading,
+        error,
         onLogin,
         onRegister,
         onLogout,
